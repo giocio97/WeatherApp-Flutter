@@ -1,7 +1,7 @@
 import 'package:app_weather/components/bottom_footer_bar.dart';
 import 'package:app_weather/models/weather_listing_model.dart';
 import 'package:app_weather/pages/city_datail_page.dart';
-import 'package:app_weather/repositories/weatherRepository.dart';
+import 'package:app_weather/repositories/weather_repository.dart';
 import 'package:app_weather/themes/colors.dart';
 import 'package:flutter/material.dart';
 
