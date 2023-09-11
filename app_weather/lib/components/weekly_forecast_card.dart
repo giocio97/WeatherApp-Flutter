@@ -15,7 +15,7 @@ class WeeklyForecastCard extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) => Container(
-                  margin: EdgeInsets.all(20),
+                  margin: EdgeInsets.all(10),
                   width: 150,
                   decoration: BoxDecoration(
                     color: Colors.white70,

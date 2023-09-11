@@ -114,8 +114,6 @@ class _HomePageState extends State<HomePage> {
                                         weather.weatherDescription,
                                     iconUrl: weather.iconUrl,
                                     temperature: weather.temperature,
-                                    dailyForecasts: weather.dailyForecasts,
-                                    hourlyForecasts: weather.hourlyForecasts,
                                   ),
                                 );
                               },
