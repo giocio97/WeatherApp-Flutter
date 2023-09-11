@@ -1,4 +1,7 @@
 import 'package:app_weather/components/bottom_footer_bar.dart';
+import 'package:app_weather/components/timeline_hourly.dart';
+import 'package:app_weather/components/weekly_forecast_card.dart';
+import 'package:app_weather/models/weather_listing_model.dart';
 import 'package:app_weather/themes/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +21,8 @@ class CityDetails extends StatelessWidget {
         children: [
           header(),
           temperatureIcon(),
+          TimelineHourly(), 
+          Center(child: WeeklyForecastCard()), 
         ],
       ),
       bottomNavigationBar: BottomFooterBar(),
@@ -27,7 +32,7 @@ class CityDetails extends StatelessWidget {
   Widget header() => SafeArea(
         child: Container(
           width: double.infinity,
-          height: 250,
+          height: 200,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,19 +90,19 @@ class CityDetails extends StatelessWidget {
       );
 
   Widget temperatureIcon() => Positioned(
-        top: 220,
-        bottom: 0,
+        top: 0,
+        bottom: 250,
         right: 0,
         left: 0,
         child: Center(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Image.network(
                 args.iconUrl,
-                width: 150,
-                height: 150,
+                width: 200,
+                height: 200,
                 fit: BoxFit.cover,
               ),
               Text(
@@ -119,6 +124,8 @@ class CityDetailsArgs {
   final String weatherDescription;
   final String iconUrl;
   final double temperature;
+  final List<HourlyForecast> hourlyForecasts; 
+  final List<DailyForecast> dailyForecasts;   
 
   const CityDetailsArgs({
     required this.cityName,
@@ -126,5 +133,7 @@ class CityDetailsArgs {
     required this.weatherDescription,
     required this.iconUrl,
     required this.temperature,
+    required this.hourlyForecasts,              
+    required this.dailyForecasts,                
   });
 }

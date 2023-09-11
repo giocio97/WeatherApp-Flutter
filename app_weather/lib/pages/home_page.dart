@@ -107,7 +107,16 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pushNamed(
                                   context,
                                   CityDetails.route,
-                                  arguments: CityDetailsArgs(cityName: weather.cityName, formattedDate: weather.formattedDate, weatherDescription: weather.weatherDescription, iconUrl: weather.iconUrl, temperature: weather.temperature),
+                                  arguments: CityDetailsArgs(
+                                    cityName: weather.cityName,
+                                    formattedDate: weather.formattedDate,
+                                    weatherDescription:
+                                        weather.weatherDescription,
+                                    iconUrl: weather.iconUrl,
+                                    temperature: weather.temperature,
+                                    dailyForecasts: weather.dailyForecasts,
+                                    hourlyForecasts: weather.hourlyForecasts,
+                                  ),
                                 );
                               },
                               child: Container(
