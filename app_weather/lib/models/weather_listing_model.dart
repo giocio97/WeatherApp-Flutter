@@ -1,3 +1,4 @@
+
 import 'package:intl/intl.dart';
 
 class WeatherListingModel {
@@ -8,16 +9,19 @@ class WeatherListingModel {
   final DateTime date;
   final String currentTime;
   final String formattedDate;
+  final String main;
+  
 
-  WeatherListingModel({
-    required this.cityName,
-    required this.temperature,
-    required this.weatherDescription,
-    required this.iconUrl,
-    required this.date,
-    required this.currentTime,
-    required this.formattedDate,
-  });
+  WeatherListingModel(
+      {required this.cityName,
+      required this.temperature,
+      required this.weatherDescription,
+      required this.iconUrl,
+      required this.date,
+      required this.currentTime,
+      required this.formattedDate,
+      required this.main,
+      });
 
   factory WeatherListingModel.fromJson(Map<String, dynamic> json) {
     final date = DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000);
@@ -32,8 +36,7 @@ class WeatherListingModel {
       date: date,
       currentTime: DateFormat('hh:mm a').format(DateTime.now()),
       formattedDate: formattedDate,
+      main: json['weather'][0]['main'],
     );
   }
 }
-
-

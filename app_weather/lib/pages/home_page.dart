@@ -1,4 +1,5 @@
 import 'package:app_weather/components/bottom_footer_bar.dart';
+import 'package:app_weather/components/header_home_page.dart';
 import 'package:app_weather/models/weather_listing_model.dart';
 import 'package:app_weather/pages/city_datail_page.dart';
 import 'package:app_weather/repositories/weather_repository.dart';
@@ -23,9 +24,11 @@ class _HomePageState extends State<HomePage> {
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Stack(
+        child: Column(
           children: [
-            header(),
+            HeaderHomePage(),
+            body(),
+            
           ],
         ),
       ),
@@ -33,58 +36,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget header() => Positioned(
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Good Moornig!",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 4, 55, 131),
-                  ),
-                ),
-                Text(
-                  "Mario",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 4, 55, 131),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.add_box_outlined,
-                    size: 25,
-                    color: Color.fromARGB(255, 4, 55, 131),
-                  ),
-                  label: Text(
-                    "Aggiungi Città",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 4, 55, 131),
-                    ),
-                  ),
-                ),
-                body(),
-              ],
-            ),
-          ),
-        ),
-      );
 
   Widget body() => Expanded(
         child: CustomScrollView(
@@ -96,12 +47,13 @@ class _HomePageState extends State<HomePage> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return Center(child: CircularProgressIndicator());
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else {
                             final weather =
                                 snapshot.data as WeatherListingModel;
+
                             return GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
@@ -134,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(18.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -178,9 +130,9 @@ class _HomePageState extends State<HomePage> {
                                         image: NetworkImage(
                                           weather.iconUrl,
                                         ),
-                                        width: 70,
-                                        height: 70,
-                                        fit: BoxFit.cover,
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.contain,
                                       ),
                                       Text(
                                         "${(weather.temperature).round()}°",
