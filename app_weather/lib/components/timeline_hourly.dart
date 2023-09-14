@@ -11,43 +11,95 @@ class TimelineHourly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-
       child: Padding(
         padding: EdgeInsets.all(10),
         child: CustomScrollView(
           scrollDirection: Axis.horizontal,
-          
           slivers: [
             SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final forecast = hourlyForecasts[index];
+                  final currentTime = DateTime.now();
+                  final forecastTime =
+                      DateTime.fromMillisecondsSinceEpoch(forecast.dt * 1000);
+                  final isPast = forecastTime.isBefore(currentTime);
+                  final formattedTime =
+                      DateFormat('HH:mm').format(forecastTime);
 
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final forecast = hourlyForecasts[index];
-                final formattedTime = DateFormat('HH:mm').format(
-                  DateTime.fromMillisecondsSinceEpoch(forecast.dt * 1000),
-                );
-      
-                return TimelineTile(
-                  axis: TimelineAxis.horizontal,
-                  alignment: TimelineAlign.center,
-                  startChild: Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: Center(child: Text('$formattedTime', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white), )),
-                  ),
-                  endChild: Padding(
-                    padding: const EdgeInsets.only(right: 2),
-                    child: Center(
-                      child: Text('${forecast.main.temp.toStringAsFixed(0)}°C', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300,  color: Colors.white),),
-                    ),
-                  ),
-                  beforeLineStyle: LineStyle(color: Colors.white),
-                  indicatorStyle: IndicatorStyle(
-                    color: Colors.white,
-                    
-                  ),
-                );
-              }, childCount: hourlyForecasts.length),
+                  return MyTimelineTile(
+                    isFirst: index == 0,
+                    isLast: index == hourlyForecasts.length - 1,
+                    isPast: isPast, 
+                    temperature:
+                        '${forecast.main.temp.toStringAsFixed(0)}°C',
+                    time: formattedTime,
+                  );
+                },
+                childCount: hourlyForecasts.length,
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class MyTimelineTile extends StatelessWidget {
+  final bool isFirst;
+  final bool isLast;
+  final bool isPast;
+  final String temperature;
+  final String time;
+
+  const MyTimelineTile({
+    required this.isFirst,
+    required this.isLast,
+    required this.isPast,
+    required this.temperature,
+    required this.time,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TimelineTile(
+      axis: TimelineAxis.horizontal,
+      alignment: TimelineAlign.center,
+      isFirst: isFirst,
+      isLast: isLast,
+      beforeLineStyle: LineStyle(
+        color: isPast ? Colors.white : Colors.white54,
+      ),
+      indicatorStyle: IndicatorStyle(
+        width: isPast ? 30 : 20,
+        color:Colors.white,
+      ),
+      startChild: Padding(
+        padding: const EdgeInsets.only(right: 10.0),
+        child: Center(
+          child: Text(
+            time,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+      endChild: Padding(
+        padding: const EdgeInsets.only(right: 2),
+        child: Center(
+          child: Text(
+            temperature,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w300,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );
