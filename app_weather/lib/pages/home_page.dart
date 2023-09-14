@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomFooterBar(),
+      bottomNavigationBar: BottomFooterBar(isHomePageSelected: true, isLocationPageSelected: false, isSearchPageSelected: false),
     );
   }
 

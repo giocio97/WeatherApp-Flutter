@@ -2,6 +2,15 @@ import 'package:app_weather/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class BottomFooterBar extends StatelessWidget {
+  final bool isHomePageSelected; 
+  final bool isSearchPageSelected; 
+  final bool isLocationPageSelected; 
+  BottomFooterBar({
+    required this.isHomePageSelected,
+    required this.isSearchPageSelected,
+    required this.isLocationPageSelected,
+  });
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,25 +33,54 @@ class BottomFooterBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
+              buildFooterIcon(
+                icon: Icons.home_outlined,
+                isSelected: isHomePageSelected,
                 onPressed: () {
                   Navigator.pushNamed(context, HomePage.route);
                 },
-                icon: Icon(Icons.home_outlined, size: 35),
               ),
-              IconButton(
+              buildFooterIcon(
+                icon: Icons.search_outlined,
+                isSelected: isSearchPageSelected,
                 onPressed: () {},
-                icon: Icon(Icons.search_outlined, size: 35),
               ),
-              IconButton(
+              buildFooterIcon(
+                icon: Icons.location_on_outlined,
+                isSelected: isLocationPageSelected,
                 onPressed: () {},
-                icon: Icon(
-                  Icons.location_on_outlined,
-                  size: 35,
-                ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+
+  Widget buildFooterIcon({
+    required IconData icon,
+    required bool isSelected,
+    required VoidCallback onPressed,
+  }) {
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.only(bottom: isSelected ? 10 : 0),
+        decoration: isSelected
+            ? BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.blue,
+                    width: 1.0,
+                  ),
+                ),
+              )
+            : null,
+        child: Icon(
+          icon,
+          size: 35,
+          color: isSelected ? Colors.blue : Colors.black,
         ),
       ),
     );

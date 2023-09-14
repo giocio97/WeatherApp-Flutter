@@ -65,7 +65,7 @@ class CityDetails extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: BottomFooterBar(),
+      bottomNavigationBar: BottomFooterBar(isHomePageSelected: false, isLocationPageSelected: false, isSearchPageSelected: false),
     );
   }
 }
